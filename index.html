@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Weekly Fitness</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0B0C0F" id="theme-color-meta">
+
+<!-- iPhone home screen behavior -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Weekly Fitness">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- Top bar: streak + theme toggle -->
+  <header class="topbar">
+    <div class="streak-chip" id="streakChip" aria-label="Weekly streak">
+      <svg class="streak-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1.2-.4-2-.9-2.7.6 2.7-1 3.7-2.1 3.7-1.4 0-2-1-2-2.3 0-1.7 1.3-2.7 1-4.7C13.4 1 12.6 1.2 12 2Z" fill="currentColor"/>
+        <path d="M8.5 13.2C8.2 14.6 8 15.7 8 16.5a4 4 0 0 0 8 0c0-1-.2-1.8-.6-2.6.2 2-1.1 3.1-2.4 3.1-1.5 0-2.5-1.1-2.5-2.6 0-.7.2-1.3.5-1.9-1 .2-1.9.8-2.5 1.7Z" fill="currentColor" opacity=".55"/>
+      </svg>
+      <span id="streakCount">0</span>
+      <span class="streak-label">wk streak</span>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36A5.4 5.4 0 0 1 12 3Z" fill="currentColor"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Center ring + stat -->
+  <main class="ring-zone">
+    <div class="ring-wrap" id="ringWrap">
+      <svg id="ringSvg" viewBox="0 0 280 280" class="ring-svg" aria-hidden="true">
+        <!-- track arcs (segments 0,1,2), drawn by JS -->
+        <g id="trackGroup"></g>
+        <!-- fill arcs -->
+        <g id="fillGroup"></g>
+      </svg>
+
+      <div class="ring-center">
+        <div class="ring-fraction" id="ringFraction"><span id="doneCount">0</span><span class="ring-fraction-slash">/3</span></div>
+        <div class="ring-sub" id="ringSub">this week</div>
+      </div>
+    </div>
+
+    <p class="status-line" id="statusLine">0 / 3 workouts completed</p>
+    <p class="reset-pill" id="resetPill">Resets in 7 days</p>
+  </main>
+
+  <!-- Action buttons -->
+  <section class="buttons" id="buttons">
+    <button class="workout-btn" data-id="1">
+      <span class="btn-check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="btn-text">
+        <span class="btn-title">Workout 1</span>
+        <span class="btn-meta">Tap when complete</span>
+      </span>
+    </button>
+
+    <button class="workout-btn" data-id="2">
+      <span class="btn-check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="btn-text">
+        <span class="btn-title">Workout 2</span>
+        <span class="btn-meta">Tap when complete</span>
+      </span>
+    </button>
+
+    <button class="workout-btn" data-id="3">
+      <span class="btn-check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="btn-text">
+        <span class="btn-title">Workout 3</span>
+        <span class="btn-meta">Tap when complete</span>
+      </span>
+    </button>
+  </section>
+
+</div>
+
+<!-- Confetti canvas, only used on full completion -->
+<canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+<script src="app.js"></script>
+</body>
+</html>

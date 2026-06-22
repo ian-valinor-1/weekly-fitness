@@ -1,0 +1,363 @@
+/* ============================================
+   Weekly Fitness — tokens
+   ============================================ */
+:root {
+  --bg: #0B0C0F;
+  --surface: #17191D;
+  --surface-2: #1E2127;
+  --text-1: #F5F6F7;
+  --text-2: #8A8F98;
+  --accent: #FF5A36;
+  --accent-soft: rgba(255, 90, 54, 0.16);
+  --accent-glow: rgba(255, 90, 54, 0.55);
+  --track: #2A2D33;
+  --divider: rgba(255,255,255,0.07);
+  --check-on-accent: #0B0C0F;
+  --shadow: rgba(0,0,0,0.45);
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+:root[data-theme="light"] {
+  --bg: #F7F7F5;
+  --surface: #FFFFFF;
+  --surface-2: #FFFFFF;
+  --text-1: #14151A;
+  --text-2: #6B7078;
+  --accent: #FF5A36;
+  --accent-soft: rgba(255, 90, 54, 0.10);
+  --accent-glow: rgba(255, 90, 54, 0.35);
+  --track: #E7E7E4;
+  --divider: rgba(0,0,0,0.08);
+  --check-on-accent: #FFFFFF;
+  --shadow: rgba(20,21,26,0.10);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.35s ease, color 0.35s ease;
+  user-select: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================
+   App shell
+   ============================================ */
+.app {
+  height: 100vh;
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: calc(var(--safe-top) + 14px) 22px calc(var(--safe-bottom) + 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ----- top bar ----- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+}
+
+.streak-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px 7px 10px;
+  border-radius: 100px;
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  box-shadow: 0 1px 0 var(--divider) inset;
+}
+
+.streak-icon { width: 15px; height: 15px; color: var(--accent); flex: none; }
+
+#streakCount {
+  color: var(--text-1);
+  font-weight: 800;
+  font-size: 14px;
+  margin-left: 1px;
+}
+
+.streak-label { color: var(--text-2); }
+
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+}
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle:active { transform: scale(0.92); }
+
+/* ----- ring zone ----- */
+.ring-zone {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 0;
+}
+
+.ring-wrap {
+  position: relative;
+  width: min(64vw, 280px);
+  aspect-ratio: 1 / 1;
+}
+
+.ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(0deg);
+}
+
+.ring-svg path.track {
+  fill: none;
+  stroke: var(--track);
+  stroke-linecap: round;
+  transition: stroke 0.35s ease;
+}
+
+.ring-svg path.fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-dasharray: var(--len, 1000);
+  stroke-dashoffset: var(--len, 1000);
+  filter: drop-shadow(0 0 0 var(--accent-glow));
+  transition:
+    stroke-dashoffset 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.6s ease;
+}
+
+.ring-svg path.fill.lit {
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 7px var(--accent-glow));
+}
+
+.ring-wrap.complete .ring-svg path.fill {
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ring-fraction {
+  font-size: clamp(40px, 13vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-1);
+}
+.ring-fraction-slash { color: var(--text-2); font-weight: 700; }
+
+.ring-sub {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.status-line {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.reset-pill {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: var(--surface);
+}
+
+/* ----- buttons ----- */
+.buttons {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 8px;
+}
+
+.workout-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: 0 1px 0 var(--divider) inset;
+  text-align: left;
+  transition: background 0.25s ease, transform 0.12s ease, opacity 0.25s ease;
+}
+
+.workout-btn:active {
+  transform: scale(0.975);
+}
+
+.btn-check {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--track);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-check svg { width: 16px; height: 16px; }
+
+.btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.btn-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-1);
+}
+
+.btn-meta {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+/* completed state */
+.workout-btn.done {
+  background: var(--accent-soft);
+}
+.workout-btn.done .btn-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--check-on-accent);
+  transform: scale(1.06);
+}
+.workout-btn.done .btn-title {
+  color: var(--text-2);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-2);
+  text-decoration-thickness: 1.5px;
+}
+.workout-btn.done .btn-meta { opacity: 0; height: 0; }
+.workout-btn.done { opacity: 0.85; }
+
+.workout-btn.locked {
+  pointer-events: none;
+}
+
+/* tiny bounce pulse the instant a button is tapped */
+@keyframes btnPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.965); }
+  100% { transform: scale(1); }
+}
+.workout-btn.pop { animation: btnPop 0.32s ease; }
+
+/* ring bounce when a segment lands */
+@keyframes ringPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.035); }
+  100% { transform: scale(1); }
+}
+.ring-wrap.pop { animation: ringPop 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* gentle shimmer sweep across the ring when fully complete */
+.ring-wrap.complete::after {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+  opacity: 0;
+  animation: ringGlow 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes ringGlow {
+  0%, 100% { opacity: 0; transform: scale(0.96); }
+  50% { opacity: 0.45; transform: scale(1.04); }
+}
+
+/* confetti canvas */
+#confettiCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  display: none;
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ring-svg path.fill,
+  .workout-btn,
+  .btn-check {
+    transition-duration: 0.01ms !important;
+  }
+  .ring-wrap.pop, .workout-btn.pop, .ring-wrap.complete::after {
+    animation: none !important;
+  }
+}
+
+/* small phones */
+@media (max-height: 700px) {
+  .ring-wrap { width: min(58vw, 240px); }
+  .workout-btn { min-height: 58px; }
+}
