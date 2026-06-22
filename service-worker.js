@@ -2,7 +2,7 @@
 // Cache-first app shell so the tracker opens instantly with no network,
 // which is what makes the Home Screen icon feel like a real native app.
 
-const CACHE_NAME = 'weekly-fitness-v1';
+const CACHE_NAME = 'weekly-fitness-v2';
 const ASSETS = [
   './',
   './index.html',

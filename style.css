@@ -7,12 +7,12 @@
   --surface-2: #1E2127;
   --text-1: #F5F6F7;
   --text-2: #8A8F98;
-  --accent: #FF5A36;
-  --accent-soft: rgba(255, 90, 54, 0.16);
-  --accent-glow: rgba(255, 90, 54, 0.55);
+  --accent: #2F7BFF;
+  --accent-soft: rgba(47, 123, 255, 0.16);
+  --accent-glow: rgba(47, 123, 255, 0.55);
   --track: #2A2D33;
   --divider: rgba(255,255,255,0.07);
-  --check-on-accent: #0B0C0F;
+  --check-on-accent: #FFFFFF;
   --shadow: rgba(0,0,0,0.45);
 
   --safe-top: env(safe-area-inset-top, 0px);
@@ -25,9 +25,9 @@
   --surface-2: #FFFFFF;
   --text-1: #14151A;
   --text-2: #6B7078;
-  --accent: #FF5A36;
-  --accent-soft: rgba(255, 90, 54, 0.10);
-  --accent-glow: rgba(255, 90, 54, 0.35);
+  --accent: #2F7BFF;
+  --accent-soft: rgba(47, 123, 255, 0.10);
+  --accent-glow: rgba(47, 123, 255, 0.35);
   --track: #E7E7E4;
   --divider: rgba(0,0,0,0.08);
   --check-on-accent: #FFFFFF;

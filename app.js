@@ -282,7 +282,7 @@ function launchConfetti() {
   canvas.style.display = 'block';
   ctx.scale(dpr, dpr);
 
-  const colors = ['#FF5A36', '#FF8A5C', '#FFD166', '#F5F6F7', '#8A8F98'];
+  const colors = ['#2F7BFF', '#6FA8FF', '#FFD166', '#F5F6F7', '#8A8F98'];
   const pieces = Array.from({ length: 80 }, () => ({
     x: window.innerWidth / 2 + (Math.random() - 0.5) * 60,
     y: window.innerHeight * 0.38,
